@@ -1,12 +1,11 @@
 const loadDeck = (type, deck) => {
-    let init = deck.size;
     for (let index = 1; index < 14; index++) {
-        deck.set(init + index, { type, value: 14 - index })
+        deck.push({ type, value: 14 - index })
     }
 }
 
 const createDeck = _ => {
-    let deck = new Map();
+    let deck = [];
     loadDeck("s", deck);
     loadDeck("c", deck);
     loadDeck("d", deck);
@@ -16,11 +15,18 @@ const createDeck = _ => {
 
 
 const drawCard = (deck) => {
-    let size = deck.size;
-    let rcard = Math.floor(Math.random() * size)
-    let card = deck.get(rcard);
-    deck.delete(rcard);
-    return card;
+    let size = deck.length;
+    let rcard = Math.floor(Math.random() * size -1)
+    let card = deck.splice(rcard,1);
+    return card[0];
 }
 
-export { createDeck, drawCard };
+const createPlayerDeck = (deck,size) => {
+    let playerDeck = [];
+    for (let index = 0; index < size; index++) {
+        playerDeck.push(drawCard(deck));
+    }
+    return playerDeck;
+}
+
+export { createDeck, drawCard , createPlayerDeck};
