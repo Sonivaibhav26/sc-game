@@ -1,4 +1,4 @@
-const priority = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 1];
+import { r_2trail, r_trail, r_2sequence, r_sequence, r_2pair, r_pair, r_topcard } from './rules'
 
 const createMeta = (deck) => {
     return deck.reduce((result, card, index, deck) => {
@@ -46,18 +46,68 @@ const createMeta = (deck) => {
 }
 
 const compare = (p1, p2) => {
+    console.log("-->",p1);
     let result = {
         winner: null,
         rule: null
     };
-    //Case for 2 trails
-    //case for 1 trail
-    //case for 1 sequence
-    //case for 2 sequence
-    //case for 1 pair
-    //case for 2 pair
-    //case for Top card
-    //cases for draw
+    let r_2trail_result = r_2trail(p1, p2);
+    if (r_2trail_result) {
+        result.winner = r_2trail_result;
+        result.rule = "High Trail";
+        onsole.log(result.rule);
+        return result;
+    }
+    let r_1trail_result = r_trail(p1, p2);
+    if (r_1trail_result) {
+        result.winner = r_1trail_result;
+        result.rule = "Trail";
+        onsole.log(result.rule);
+        return result;
+    }
+    let r_2sequence_result = r_2sequence(p1, p2);
+    if (r_2sequence_result) {
+        result.winner = r_2sequence_result;
+        result.rule = "High Sequence";
+        onsole.log(result.rule);
+        return result;
+    }
+    let r_sequence_result = r_sequence(p1, p2);
+    if (r_sequence_result) {
+        result.winner = r_sequence_result;
+        result.rule = "Sequence";
+        onsole.log(result.rule);
+        return result;
+    }
+    let r_2pair_result = r_2pair(p1, p2);
+    if (r_2pair_result) {
+        result.winner = r_2pair_result;
+        result.rule = "High Pair";
+        console.log(result.rule);
+        return result;
+    }
+    let r_pair_result = r_pair(p1, p2);
+    if (r_pair_result) {
+        result.winner = r_pair_result;
+        result.rule = "Pair";
+        console.log("Pair");
+        return result;
+    }
+    // let r_pair_result = r_pair(p1, p2);
+    // if (r_pair_result) {
+    //     result.winner = r_pair_result;
+    //     result.rule = "Pair";
+    //     return result;
+    // }
+    let r_topcard_result = r_topcard(p1, p2);
+    if (r_topcard_result) {
+        result.winner = r_topcard_result;
+        result.rule = "Top Card";
+        console.log("Top Card");
+        return result;
+    } else {
+        console.log("draw");
+    }
 }
 
 export { createMeta, compare }
