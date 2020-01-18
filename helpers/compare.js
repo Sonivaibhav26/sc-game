@@ -1,4 +1,4 @@
-import { r_2trail, r_trail, r_2sequence, r_sequence, r_2pair, r_pair, r_topcard } from './rules'
+import { r_2trail, r_trail, r_2sequence, r_sequence, r_2pair, r_pair, r_topcard , r_draw } from './rules'
 
 const createMeta = (deck) => {
     return deck.reduce((result, card, index, deck) => {
@@ -20,8 +20,8 @@ const createMeta = (deck) => {
         }
         if (index === deck.length - 1) {
             if (result.uniqueValues.length === 1) {
-                trail = true;
-                trailvalue = result.uniqueValues[0];
+                result.trail = true;
+                result.trailvalue = result.uniqueValues[0];
             }
             if (result.uniqueValues.length === 3) {
                 result.uniqueValues.sort((a, b) => a - b)
@@ -45,8 +45,7 @@ const createMeta = (deck) => {
     })
 }
 
-const compare = (p1, p2) => {
-    console.log("-->",p1);
+const compare = (p1, p2, deck) => {
     let result = {
         winner: null,
         rule: null
@@ -55,14 +54,12 @@ const compare = (p1, p2) => {
     if (r_2trail_result) {
         result.winner = r_2trail_result;
         result.rule = "High Trail";
-        onsole.log(result.rule);
         return result;
     }
     let r_1trail_result = r_trail(p1, p2);
     if (r_1trail_result) {
         result.winner = r_1trail_result;
         result.rule = "Trail";
-        onsole.log(result.rule);
         return result;
     }
     let r_2sequence_result = r_2sequence(p1, p2);
@@ -76,37 +73,32 @@ const compare = (p1, p2) => {
     if (r_sequence_result) {
         result.winner = r_sequence_result;
         result.rule = "Sequence";
-        onsole.log(result.rule);
         return result;
     }
     let r_2pair_result = r_2pair(p1, p2);
     if (r_2pair_result) {
         result.winner = r_2pair_result;
         result.rule = "High Pair";
-        console.log(result.rule);
         return result;
     }
     let r_pair_result = r_pair(p1, p2);
     if (r_pair_result) {
         result.winner = r_pair_result;
         result.rule = "Pair";
-        console.log("Pair");
         return result;
     }
-    // let r_pair_result = r_pair(p1, p2);
-    // if (r_pair_result) {
-    //     result.winner = r_pair_result;
-    //     result.rule = "Pair";
-    //     return result;
-    // }
     let r_topcard_result = r_topcard(p1, p2);
     if (r_topcard_result) {
         result.winner = r_topcard_result;
         result.rule = "Top Card";
-        console.log("Top Card");
         return result;
     } else {
-        console.log("draw");
+        let r_draw_result = r_draw(p1, p2, deck);
+        if (r_draw_result) {
+            result.winner = r_draw_result;
+            result.rule = "Draw";
+            return result;
+        }
     }
 }
 

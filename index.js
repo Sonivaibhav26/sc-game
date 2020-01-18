@@ -10,25 +10,24 @@ players.forEach(player => {
     playerDecks[player].deck = createPlayerDeck(deck, 3);
     playerDecks[player].meta = createMeta(playerDecks[player].deck);
     playerDecks[player].name = player;
-    // console.table(playerDecks[player]);
 })
 
 let scoreBoard = Object.keys(playerDecks).reduce((result, player) => {
     player = playerDecks[player];
     if (!result.winner) {
         result.winner = player;
-        result.decks = [{ name: player.name , deck: player.deck }];
-        // result.decks = [player.deck]
+        result.table = [{ name: player.name, ...player.meta }];
     } else {
-        let winner = compare(result.winner, player);
-        console.log(winner);
+        let winner = compare(result.winner, player , deck);
         if (winner.winner === player.name) {
             result.winner = player;
         }
-        result.decks.push({ name: player.name , deck: player.deck });
+        result.rule = winner.rule;
+        result.table.push({ name: player.name, ...player.meta });
     }
     return result;
 }, {})
+console.info("==============================> Winner : ->",scoreBoard.winner.name);
+console.info("==============================> Rule : ->",scoreBoard.rule);
+console.table(scoreBoard.table)
 
-console.table(scoreBoard.decks);
-console.table(scoreBoard.winner);
