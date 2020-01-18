@@ -1,5 +1,7 @@
-const sayHello = _ => "Hello World!"
+import { createDeck ,drawCard } from './helpers/helper';
 
-console.log(sayHello())
+let deck = createDeck();
+let cardDrawn = drawCard(deck);
 
-export default sayHello
+console.log(cardDrawn);
+console.log(deck.size);
