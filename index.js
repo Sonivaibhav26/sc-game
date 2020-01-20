@@ -2,7 +2,7 @@ import { createDeck, drawCard, createPlayerDeck } from './helpers/helper';
 import { createMeta, compare } from './helpers/compare';
 
 let deck = createDeck();
-let players = ["Vaibhav", "Ravi", "Vicky", "Pawan"];
+let players = ["Vaibhav", "Ravi", "Vicky", "Pawan", "Amit"];
 let playerDecks = {};
 
 players.forEach(player => {
@@ -12,22 +12,25 @@ players.forEach(player => {
     playerDecks[player].name = player;
 })
 
-let scoreBoard = Object.keys(playerDecks).reduce((result, player) => {
-    player = playerDecks[player];
-    if (!result.winner) {
-        result.winner = player;
-        result.table = [{ name: player.name, ...player.meta }];
-    } else {
-        let winner = compare(result.winner, player , deck);
-        if (winner.winner === player.name) {
+export let play = (playerDecks) =>
+    Object.keys(playerDecks).reduce((result, player) => {
+        player = playerDecks[player];
+        if (!result.winner) {
             result.winner = player;
+            result.table = [{ name: player.name, ...player.meta }];
+        } else {
+            let winner = compare(result.winner, player, deck);
+            if (winner.winner === player.name) {
+                result.winner = player;
+            }
+            result.rule = winner.rule;
+            result.table.push({ name: player.name, ...player.meta });
         }
-        result.rule = winner.rule;
-        result.table.push({ name: player.name, ...player.meta });
-    }
-    return result;
-}, {})
-console.info("==============================> Winner : ->",scoreBoard.winner.name);
-console.info("==============================> Rule : ->",scoreBoard.rule);
+        return result;
+    }, {});
+
+let scoreBoard = play(playerDecks);
+console.info("==============================> Winner : ->", scoreBoard.winner.name);
+console.info("==============================> Rule : ->", scoreBoard.rule);
 console.table(scoreBoard.table)
 

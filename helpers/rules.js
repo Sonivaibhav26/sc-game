@@ -89,23 +89,21 @@ export const r_topcard = (p1, p2) => {
 }
 
 export const r_draw = (p1, p2, deck) => {
-    if (!p1.meta.drawdeck) {
-        p1.meta.drawdeck = []
-    }
-    if (!p2.meta.drawdeck) {
-        p2.meta.drawdeck = []
-    }
+    // if (!p1.meta.drawdeck) {
+    //     p1.meta.drawdeck = []
+    // }
+    // if (!p2.meta.drawdeck) {
+    //     p2.meta.drawdeck = []
+    // }
     let p1Card = drawCard(deck);
     let p2Card = drawCard(deck);
-    p1.meta.drawdeck.push(p1Card.value)
-    p2.meta.drawdeck.push(p2Card.value)
-    console.log(p1Card,p2Card)
+    // p1.meta.drawdeck.push(p1Card.value)
+    // p2.meta.drawdeck.push(p2Card.value)
     if(priority.indexOf(p1Card.value) > priority.indexOf(p2Card.value)){
         return p1.name;
     } else if (priority.indexOf(p1Card.value) < priority.indexOf(p2Card.value)) {
         return p2.name;
     } else {
-        console.log("++++++++");
         return r_draw(p1, p2, deck);
     }
 }
