@@ -2,7 +2,7 @@ import { createDeck, drawCard, createPlayerDeck } from './helpers/helper';
 import { createMeta, compare } from './helpers/compare';
 
 let deck = createDeck();
-let players = ["Vaibhav", "Ravi", "Vicky", "Pawan", "Amit"];
+let players = ["Vaibhav", "Ravi", "Vicky", "Pawan"];
 let playerDecks = {};
 
 players.forEach(player => {
@@ -12,7 +12,7 @@ players.forEach(player => {
     playerDecks[player].name = player;
 })
 
-export let play = (playerDecks) =>
+const play = (playerDecks) =>
     Object.keys(playerDecks).reduce((result, player) => {
         player = playerDecks[player];
         if (!result.winner) {
@@ -34,3 +34,4 @@ console.info("==============================> Winner : ->", scoreBoard.winner.na
 console.info("==============================> Rule : ->", scoreBoard.rule);
 console.table(scoreBoard.table)
 
+export { play }
