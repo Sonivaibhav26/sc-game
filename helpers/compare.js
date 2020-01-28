@@ -66,7 +66,6 @@ const compare = (p1, p2, deck) => {
     if (r_2sequence_result) {
         result.winner = r_2sequence_result;
         result.rule = "High Sequence";
-        onsole.log(result.rule);
         return result;
     }
     let r_sequence_result = r_sequence(p1, p2);
